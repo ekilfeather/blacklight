@@ -1,7 +1,11 @@
 # -*- encoding : utf-8 -*-
 Given /^I am logged in as "([^\"]*)"$/ do |login|
   email = "#{login}@#{login}.com"
-  user = User.create(:email => email, :password => "password", :password_confirmation => "password")
+  user = User.new.tap do |u|
+    u.email = email
+    u.password = "password"
+    u.password_confirmation = "password"
+  end
   visit new_user_session_path
   fill_in("user_email", :with => email) 
   fill_in("user_password", :with => "password") 
